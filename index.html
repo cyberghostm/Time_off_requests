@@ -14,8 +14,13 @@
 <body>
     <h1>Time_off_requests</h1> 
     <div>
-        <label for="bday">Введите дату: </label>
-        <input type="date" id="bday" name="rday" />
+        <label for="bday">Введите дату с: </label>
+        <input type="date" id="bdate" name="bdate" />
+       
+    </div>
+    <div>
+        <label for="eday">Введите дату по: </label>
+        <input type="date" id="edate" name="edate" />
        
     </div>
     <div>
@@ -27,6 +32,16 @@
         <input id="endtime" type="time" name="endtime" />
     </div>
     <div>
+        <label for="type">Выберете тип: </label>
+        <select id="trequest" name="trequest">
+            <option value="otgul">Отгул</option>
+            <option value="komandirovka">Командировка</option>
+            <option value="otpusk">Отпуск</option>
+        </select>
+      </div>
+
+    <div>
+    <div>
         <label for="uname">Введите коментарий: </label>
         <input type="text" id="memo" name="memo" />
       </div>
@@ -34,6 +49,7 @@
     <div>
         <input type="button" value="Отправить" />
     </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
 
