@@ -47,9 +47,17 @@
       </div>
 
     <div>
-        <input type="button" value="Отправить" />
+        <input type="button" value="Отправить" id = "send" />
     </div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+       let tg = window.Telegram.WebApp;
+       let send = document.getElementById("send");
+       
+       send.addEventListener("click", () => {
+            tg.close(); 
+       });
+
+    </script>
 </body>
 </html>
-
