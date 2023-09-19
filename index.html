@@ -53,11 +53,28 @@
     <script>
        let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
+       tg.expand();
        
        send.addEventListener("click", () => {
+            bdate = document.getElementById("bdate").value;
+            edate = document.getElementById("bdate").value;
+            btime = document.getElementById("begintime").value;
+            etime = document.getElementById("endtime").value;
+            trequest = document.getElementById("trequest").value;
+            memo = document.getElementById("memo").value;
+            let data = {
+                bdate:bdate,
+                edate:edate,
+                btime:btime,
+                etime:etime,
+                trequest,trequest,
+                memo:memo
+            }
+            tg.sendData(JSON.stringify(data))
             tg.close(); 
        });
 
     </script>
 </body>
 </html>
+
