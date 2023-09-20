@@ -190,9 +190,6 @@
                 return;
             }
           });
-        
-        tg.expand();
-
 
        let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
@@ -236,7 +233,7 @@
             tg.sendData(JSON.stringify(data));
             tg.close(); 
        });
-
+        tg.expand();
     </script>
 </body>
 </html>
