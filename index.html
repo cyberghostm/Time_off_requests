@@ -98,6 +98,8 @@
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        tg.expand();
+
         function getDate() {
             var date = new Date();
             document.getElementById('timedisplay').innerHTML = date.toLocaleString();
@@ -131,11 +133,17 @@
             n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
             input_btime.value = n_time;
             input_btime.min = n_time;
-        }else
+            input_etime.value = "18:00";
+            input_etime.min = n_time;
+            input_etime.max = "18:00";
+            }else
         {
             input_btime.min = "09:00";
             input_btime.max = "18:00";
             input_btime.value = "";
+            input_etime.value = "";
+            input_etime.min = "09:00";
+            input_etime.max = "18:00";
         }
 
 
@@ -146,12 +154,18 @@
                 n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
                 input_btime.value = n_time;
                 input_btime.min = n_time;
-            }else
+                input_etime.value = "18:00";
+                input_etime.min = n_time;
+                input_etime.max = "18:00";
+                }else
             {
                 input_btime.min = "09:00";
                 input_btime.max = "18:00";
                 input_btime.value = "";
-            }
+                input_etime.value = "";
+                input_etime.min = "09:00";
+                input_etime.max = "18:00";
+                }
 
           });
 
@@ -183,7 +197,6 @@
        let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
        
-       tg.expand();
 
        send.addEventListener("click", () => {
             document.getElementById("error").innerText = "";
