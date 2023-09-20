@@ -21,6 +21,7 @@
 <body>
     <h1>Time_off_requests</h1> 
 
+    <div id="timedisplay"></div>
     <div id = "main">
         <table>
             <tr>
@@ -53,34 +54,50 @@
             <tr><td><label for="uname">Введите коментарий: </label><p></p></td></tr>
             <tr><td><textarea style='width:99%' rows="3" cols="30" id="memo" name="memo" ></textarea></td></tr>
         </table>
-        <div id = "error"></div>
         <input type="button" value="Отправить" id = "send" />
     </div>
-
+    <h3><div id="error"</div></h3>
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        function getDate() {
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+            //По надобности условие ниже повторить с minutes и hours
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+            document.getElementById('timedisplay').innerHTML = hours + ':' + minutes + ':' + seconds;
+        }
+        
+ 
        let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
        tg.expand();
        
+
        send.addEventListener("click", () => {
-            document.getElementById('error').innerText = '';
-            bdate = document.getElementById("bdate").value;
-            edate = document.getElementById("bdate").value;
-            btime = document.getElementById("begintime").value;
-            etime = document.getElementById("endtime").value;
-            trequest = document.getElementById("trequest").value;
-            memo = document.getElementById("memo").value;
-            if (bdata.length < 8)
+            document.getElementById("error").innerText = "";
+            setInterval(getDate, 0);
+            let bdate = document.getElementById("bdate").value;
+            let edate = document.getElementById("bdate").value;
+            let btime = document.getElementById("begintime").value;
+            let etime = document.getElementById("endtime").value;
+            let trequest = document.getElementById("trequest").value;
+            let memo = document.getElementById("memo").value;
+
+            if (bdate.length < 8)
             {
-                document.getElementById('error').innerText = 'Дата не должна быть пустой';
+                document.getElementById("error").innerText = "Дата не должна быть пустой";
                 return;
             }
             if (btime.length > 4)
             {
                 if (memo.length < 5)
                 {
-                    document.getElementById('error').innerText = 'Коментарий не должен быть пустым';
+                    document.getElementById("error").innerText = "Коментарий не должен быть пустым";
                     return;
                 }
             }
