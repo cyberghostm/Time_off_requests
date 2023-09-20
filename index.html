@@ -8,7 +8,7 @@
     <style>
         table, th, td {
 	        border: 0px solid black;
-            width: 100%;
+            width: 80%;
     	}
         body {
             font-weight: 200;
@@ -21,7 +21,7 @@
 <body>
     <h1>Time_off_requests</h1> 
 
-    <div>
+    <div id = "main">
         <table>
             <tr>
                 <td><label for="bday">Введите дату с: </label></td>
@@ -53,9 +53,7 @@
             <tr><td><label for="uname">Введите коментарий: </label><p></p></td></tr>
             <tr><td><textarea style='width:99%' rows="3" cols="30" id="memo" name="memo" ></textarea></td></tr>
         </table>
-    </div>
-
-    <div>
+        <div id = "error"></div>
         <input type="button" value="Отправить" id = "send" />
     </div>
 
@@ -66,12 +64,26 @@
        tg.expand();
        
        send.addEventListener("click", () => {
+            document.getElementById('error').innerText = '';
             bdate = document.getElementById("bdate").value;
             edate = document.getElementById("bdate").value;
             btime = document.getElementById("begintime").value;
             etime = document.getElementById("endtime").value;
             trequest = document.getElementById("trequest").value;
             memo = document.getElementById("memo").value;
+            if (bdata.length < 8)
+            {
+                document.getElementById('error').innerText = 'Дата не должна быть пустой';
+                return;
+            }
+            if (btime.length > 4)
+            {
+                if (memo.length < 5)
+                {
+                    document.getElementById('error').innerText = 'Коментарий не должен быть пустым';
+                    return;
+                }
+            }
 
             let data = {
                 bdate: bdate,
