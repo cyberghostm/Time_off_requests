@@ -7,25 +7,31 @@
     <title>Time_off_requests</title>
     <style>
         table, th{
-	        border: 1px solid black;
+	        border: 0px solid black;
             width: 90%;
     	}
          td {
-	        border: 1px solid black;
+	        border: 0px solid black;
             width: 80%;
     	}
         body {
             font-weight: 200;
             color: var(--tg-theme-text-color);
-            background: #3B57E9;
-            background: var(--tg-theme-bg-color);
+            background: #74f2f9;
         }
         #main {
             width: 100%;
             padding: 20px;
             text-align: center;
+       } 
+       #error{
+             width: 100%;
+            padding: 20px;
+            color:red;
+            text-align: center;
        }
-        label {
+
+       label {
             display: flex;
             align-items: center;
           }
@@ -116,14 +122,33 @@
         input_etime.min = "09:00";
         input_etime.max = "18:00";
 
-
-        input_bdate.addEventListener("change", (event) => {
-
-            var n_time = bdate.toISOString().split("T")[1];
+        if (input_bdate.value == bdate.toISOString().split("T")[0])
+        {
+            var n_time = bdate.toLocaleTimeString();
             n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
-            document.getElementById("error").innerText =n_time;
             input_btime.value = n_time;
             input_btime.min = n_time;
+        }else
+        {
+            input_btime.min = "09:00";
+            input_btime.max = "18:00";
+            input_btime.value = "";
+        }
+
+
+        input_bdate.addEventListener("change", (event) => {
+            if (input_bdate.value == bdate.toISOString().split("T")[0])
+            {
+                var n_time = bdate.toLocaleTimeString();
+                n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
+                input_btime.value = n_time;
+                input_btime.min = n_time;
+            }else
+            {
+                input_btime.min = "09:00";
+                input_btime.max = "18:00";
+                input_btime.value = "";
+            }
 
           });
 
