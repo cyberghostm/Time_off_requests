@@ -8,7 +8,7 @@
     <style>
         table, th{
 	        border: 0px solid black;
-            width: 100%;
+            width: 80%;
     	}
          td {
 	        border: 0px solid black;
@@ -106,14 +106,28 @@
         setInterval(getDate, 0);
 
     //    document.getElementById('error').innerText = "ok";
-
         var bdate = new Date();
         var bdate_t = bdate.toISOString().split("T")[0];
+
+        if (bdate.getHours() > 17 && bdate.getMinutes() > 50)
+        {
+            bdate.setDate(bdate.getDate() + 1);
+            bdate_t = bdate.toISOString().split("T")[0];
+        }
+
 
         const input_bdate = document.getElementById("bdate");
         input_bdate.type = "date";
         input_bdate.value = bdate_t;
         input_bdate.min = bdate_t;
+
+        const input_edate = document.getElementById("edate");
+        input_edate.type = "date";
+        var edate = new Date(bdate);
+        edate.setDate(edate.getDate() + 1);
+        edate_t = edate.toISOString().split("T")[0];
+//        input_edate.value = edate_t;
+        input_edate.min = edate_t;
 
 
         const input_btime = document.getElementById("begintime");
@@ -145,8 +159,16 @@
             input_etime.max = "18:00";
         }
 
-
         input_bdate.addEventListener("change", (event) => {
+            var edate_l = new Date(Date.parse(input_bdate.value));
+            edate_l.setDate(edate_l.getDate() + 1);
+            edate_t = edate_l.toISOString().split("T")[0];
+            input_edate.min = edate_t;
+            if (input_edate.value != ""){
+                input_edate.value = edate_t;
+            }
+
+
             if (input_bdate.value == bdate.toISOString().split("T")[0])
             {
                 var n_time = bdate.toLocaleTimeString();
@@ -190,6 +212,8 @@
                 return;
             }
           });
+        
+
 
        let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
@@ -232,8 +256,10 @@
             }
             tg.sendData(JSON.stringify(data));
             tg.close(); 
+
        });
-        tg.expand();
+       tg.expand();
+
     </script>
 </body>
 </html>
