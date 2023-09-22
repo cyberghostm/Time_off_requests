@@ -98,6 +98,9 @@
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
 
         function getDate() {
             var date = new Date();
@@ -212,12 +215,8 @@
                 return;
             }
           });
-        
 
-
-       let tg = window.Telegram.WebApp;
        let send = document.getElementById("send");
-       
 
        send.addEventListener("click", () => {
             document.getElementById("error").innerText = "";
@@ -227,7 +226,6 @@
             let etime = document.getElementById("endtime").value;
             let trequest = document.getElementById("trequest").value;
             let memo = document.getElementById("memo").value;
-
     
 
             if (bdate.length < 8)
@@ -235,7 +233,6 @@
                 document.getElementById("error").innerText = "Дата не должна быть пустой";
                 return;
             }
-
 
             if (btime.length > 4)
             {
@@ -256,10 +253,11 @@
             }
             tg.sendData(JSON.stringify(data));
             tg.close(); 
-
        });
-       tg.expand();
-
+    //   Telegram.WebApp.onEvent('mainButtonClicked', function(){
+//        tg.sendData("some string that we need to send"); 
+        //при клике на основную кнопку отправляем данные в строковом виде
+       });
     </script>
 </body>
 </html>
