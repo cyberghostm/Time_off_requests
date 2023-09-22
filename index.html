@@ -100,7 +100,7 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-
+ 
         function getDate() {
             var date = new Date();
             document.getElementById('timedisplay').innerHTML = date.toLocaleString();
@@ -192,6 +192,7 @@
 
           });
 
+
         input_btime.addEventListener("change", (event) => {
             if (input_btime.validity.valid && input_btime.type === "time") 
             {
@@ -214,9 +215,11 @@
             }
           });
 
-       let send = document.getElementById("send");
-
-       send.addEventListener("click", () => {
+        tg.MainButton.text = "Отправить"; //изменяем текст кнопки 
+        tg.MainButton.enable()
+        let send = document.getElementById("send");
+        
+        send.addEventListener("click", () => {
             document.getElementById("error").innerText = "";
             let bdate = document.getElementById("bdate").value;
             let edate = document.getElementById("edate").value;
@@ -252,10 +255,11 @@
             tg.sendData(JSON.stringify(data));
             tg.close(); 
        });
-    //   Telegram.WebApp.onEvent('mainButtonClicked', function(){
-//        tg.sendData("some string that we need to send"); 
+       
+       Telegram.WebApp.onEvent('mainButtonClicked', function(){
+            tg.sendData("some string that we need to send"); 
         //при клике на основную кнопку отправляем данные в строковом виде
-   //    });
+       });
     </script>
 </body>
 </html>
