@@ -261,7 +261,8 @@
        });
        
        Telegram.WebApp.onEvent('mainButtonClicked', function(){
-            tg.sendData("some string that we need to send"); 
+            input_edate.value = edate_t;
+	    tg.sendData("some string that we need to send"); 
             tg.close(); 
         //при клике на основную кнопку отправляем данные в строковом виде
        });
