@@ -1,14 +1,266 @@
-<!DOCTYPE HTML>
-<html>
- <head>
-  <meta charset="utf-8">
-  <title>Тег IFRAME</title>
- </head>
- <body>  
- <script>window.Telegram.WebApp.ready();</script>
- <iframe src="menu.html" width="480" height="480" align="center">
-    Ваш браузер не поддерживает плавающие фреймы!
- </iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time_off_requests</title>
+    <style>
+        table, th{
+	        border: 0px solid black;
+            width: 80%;
+    	}
+         td {
+	        border: 0px solid black;
+            width: 80%;
+    	}
+        body {
+            font-weight: 200;
+            color: var(--tg-theme-text-color);
+            background: #74f2f9;
+        }
+        #main {
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+       } 
+       #error{
+            width: 100%;
+            padding: 10px;
+            color:red;
+            text-align: center;
+       }
 
- </body>
+       label {
+            display: flex;
+            align-items: center;
+          }
+          
+          span::after {
+            padding-left: 5px;
+          }
+          
+          input:invalid + span::after {
+            content: "✖";
+          }
+          
+          input:valid + span::after {
+            content: "✓";
+          }
+    </style>	
+</head>
+<body>
+    <h1>Прогулки без прогулов</h1> 
+    <div id = "main">
+        <table>
+            <tr>
+                <td><h3><div id="timedisplay"></div></h3></td>
+            </tr>
+            <tr>
+                <td><label for="bday">Введите дату с: </label></td>
+                <td><input type="date" id="bdate" name="bdate" /></td>
+            </tr>
+            <tr>
+                <td><label for="eday">Введите дату по: </label></td>
+                <td><input type="date" id="edate" name="edate" /></td>
+            </tr>
+            <tr>
+                <td><label for="appt-time">Введите время начала: </label></td>
+                <td><input id="begintime" type="time" name="begintime" min = "09:00" max = "18:00" required/>
+                    <span class="validity"></span></td>
+            </tr>
+            <tr>
+                <td><label for="appt-time">Введите время окончания: </label></td>
+                <td><input id="endtime" type="time" name="endtime"  min = "09:00" max = "18:00" required/>
+                    <span class="validity"></span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="type">Выберете тип: </label></td>
+                <td><select id="trequest" name="trequest">
+                    <option value="Отгул">Отгул</option>
+                    <option value="Выезд">Выезд</option>
+                    <option value="Командировка">Командировка</option>
+                    <option value="Отпуск">Отпуск</option>
+                </select></td>
+            </tr>
+            <tr>
+        </table>
+        <table>
+            <tr><td><label for="uname">Введите коментарий: </label><p></p></td></tr>
+            <tr><td><textarea style='width:99%' rows="3" cols="30" id="memo" name="memo" ></textarea></td></tr>
+        </table>
+        <input type="button" value="Отправить" id = "send" />
+        <div 
+        id="error"
+    </div>
+    </div>
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+
+        function getDate() {
+            var date = new Date();
+            document.getElementById('timedisplay').innerHTML = date.toLocaleString();
+        }
+        setInterval(getDate, 0);
+
+    //    document.getElementById('error').innerText = "ok";
+        var bdate = new Date();
+        var bdate_t = bdate.toISOString().split("T")[0];
+
+        if (bdate.getHours() > 17 && bdate.getMinutes() > 50)
+        {
+            bdate.setDate(bdate.getDate() + 1);
+            bdate_t = bdate.toISOString().split("T")[0];
+        }
+
+
+        const input_bdate = document.getElementById("bdate");
+        input_bdate.type = "date";
+        input_bdate.value = bdate_t;
+        input_bdate.min = bdate_t;
+
+        const input_edate = document.getElementById("edate");
+        input_edate.type = "date";
+        var edate = new Date(bdate);
+        edate.setDate(edate.getDate() + 1);
+        edate_t = edate.toISOString().split("T")[0];
+//        input_edate.value = edate_t;
+        input_edate.min = edate_t;
+
+
+        const input_btime = document.getElementById("begintime");
+        input_btime.type = "time";
+        input_btime.min = "09:00";
+        input_btime.max = "18:00";
+
+        const input_etime = document.getElementById("endtime");
+        input_etime.type = "time";
+        input_etime.min = "09:00";
+        input_etime.max = "18:00";
+
+        if (input_bdate.value == bdate.toISOString().split("T")[0])
+        {
+            var n_time = bdate.toLocaleTimeString();
+            n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
+            input_btime.value = n_time;
+            input_btime.min = n_time;
+            input_etime.value = "18:00";
+            input_etime.min = n_time;
+            input_etime.max = "18:00";
+            }else
+        {
+            input_btime.min = "09:00";
+            input_btime.max = "18:00";
+            input_btime.value = "";
+            input_etime.value = "";
+            input_etime.min = "09:00";
+            input_etime.max = "18:00";
+        }
+
+        input_bdate.addEventListener("change", (event) => {
+            var edate_l = new Date(Date.parse(input_bdate.value));
+            edate_l.setDate(edate_l.getDate() + 1);
+            edate_t = edate_l.toISOString().split("T")[0];
+            input_edate.min = edate_t;
+            if (input_edate.value != ""){
+                input_edate.value = edate_t;
+            }
+
+
+            if (input_bdate.value == bdate.toISOString().split("T")[0])
+            {
+                var n_time = bdate.toLocaleTimeString();
+                n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
+                input_btime.value = n_time;
+                input_btime.min = n_time;
+                input_etime.value = "18:00";
+                input_etime.min = n_time;
+                input_etime.max = "18:00";
+                }else
+            {
+                input_btime.min = "09:00";
+                input_btime.max = "18:00";
+                input_btime.value = "";
+                input_etime.value = "";
+                input_etime.min = "09:00";
+                input_etime.max = "18:00";
+                }
+
+          });
+
+
+        input_btime.addEventListener("change", (event) => {
+            if (input_btime.validity.valid && input_btime.type === "time") 
+            {
+                document.getElementById("error").innerText = "";
+            } else 
+            {
+                document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
+                return;
+            }
+          });
+        
+          input_etime.addEventListener("change", (event) => {
+            if (input_etime.validity.valid && input_etime.type === "time") 
+            {
+                document.getElementById("error").innerText = "";
+            } else 
+            {
+                document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
+                return;
+            }
+          });
+        
+
+
+       let tg = window.Telegram.WebApp;
+       let send = document.getElementById("send");
+       
+
+       send.addEventListener("click", () => {
+            document.getElementById("error").innerText = "";
+            let bdate = document.getElementById("bdate").value;
+            let edate = document.getElementById("edate").value;
+            let btime = document.getElementById("begintime").value;
+            let etime = document.getElementById("endtime").value;
+            let trequest = document.getElementById("trequest").value;
+            let memo = document.getElementById("memo").value;
+
+    
+
+            if (bdate.length < 8)
+            {
+                document.getElementById("error").innerText = "Дата не должна быть пустой";
+                return;
+            }
+
+
+            if (btime.length > 4)
+            {
+                if (memo.length < 5)
+                {
+                    document.getElementById("error").innerText = "Коментарий не должен быть пустым";
+                    return;
+                }
+            }
+
+            let data = {
+                bdate: bdate,
+                edate: edate,
+                btime: btime,
+                etime: etime,
+                trequest: trequest,
+                memo: memo
+            }
+            tg.sendData(JSON.stringify(data));
+            tg.close(); 
+
+       });
+       tg.expand();
+
+    </script>
+</body>
 </html>
+
