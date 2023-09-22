@@ -257,11 +257,12 @@
                 memo: memo
             }
             tg.sendData(JSON.stringify(data));
-            tg.close(); 
+//            tg.close(); 
        });
        
        Telegram.WebApp.onEvent('mainButtonClicked', function(){
             tg.sendData("some string that we need to send"); 
+            tg.close(); 
         //при клике на основную кнопку отправляем данные в строковом виде
        });
     </script>
