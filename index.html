@@ -98,9 +98,6 @@
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-
 
         function getDate() {
             var date = new Date();
@@ -193,6 +190,8 @@
 
           });
 
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
         input_btime.addEventListener("change", (event) => {
             if (input_btime.validity.valid && input_btime.type === "time") 
