@@ -98,7 +98,7 @@
     
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-
+	window.Telegram.WebApp.ready();
         function getDate() {
             var date = new Date();
             document.getElementById('timedisplay').innerHTML = date.toLocaleString();
