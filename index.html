@@ -254,13 +254,7 @@
                 trequest: trequest,
                 memo: memo
             }
-                
-            if (tg.MainButton.isVisible){ //если кнопка показана 
-                tg.MainButton.hide() //скрываем кнопку 
-             }
-             else{ //иначе
-                tg.MainButton.show() //показываем 
-             }
+            tg.MainButton.show() //показываем 
        });
 
        Telegram.WebApp.onEvent('mainButtonClicked', function(){
@@ -273,7 +267,6 @@
 //        let memo = document.getElementById("memo").value;
 
         tg.sendData(JSON.stringify(data));
-//        tg.sendData("Строка данных");
         tg.close(); 
        });
     </script>
