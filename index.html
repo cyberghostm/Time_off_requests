@@ -257,17 +257,28 @@
             tg.MainButton.show() //показываем 
        });
 
-       Telegram.WebApp.onEvent('mainButtonClicked', function(){
+       Telegram.WebApp.onEvent('mainButtonClicked', function()
+       {
 //        document.getElementById("error").innerText = "";
-//        let bdate = document.getElementById("bdate").value;
-//        let edate = document.getElementById("edate").value;
-//        let btime = document.getElementById("begintime").value;
-//        let etime = document.getElementById("endtime").value;
-//        let trequest = document.getElementById("trequest").value;
-//        let memo = document.getElementById("memo").value;
+        let bdate = document.getElementById("bdate").value;
+        let edate = document.getElementById("edate").value;
+        let btime = document.getElementById("begintime").value;
+        let etime = document.getElementById("endtime").value;
+        let trequest = document.getElementById("trequest").value;
+        let memo = document.getElementById("memo").value;
+
+        let data = {
+            bdate: bdate,
+            edate: edate,
+            btime: btime,
+            etime: etime,
+            trequest: trequest,
+            memo: memo
+        }
 
         tg.sendData(JSON.stringify(data));
-        tg.close(); 
+//         tg.sendData("Строка данных");
+         tg.close(); 
        });
     </script>
 </body>
