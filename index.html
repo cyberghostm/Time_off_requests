@@ -254,8 +254,11 @@
                 trequest: trequest,
                 memo: memo
             }
-            tg.MainButton.show() //показываем 
-       });
+//            tg.MainButton.show() //показываем 
+	    tg.sendData(JSON.stringify(data));
+            tg.close(); 
+
+	});
 
        Telegram.WebApp.onEvent('mainButtonClicked', function()
        {
@@ -276,8 +279,8 @@
             memo: memo
         }
 
-        tg.sendData(JSON.stringify(data));
-//         tg.sendData("Строка данных");
+//        tg.sendData(JSON.stringify(data));
+         tg.sendData("Строка данных");
          tg.close(); 
        });
     </script>
