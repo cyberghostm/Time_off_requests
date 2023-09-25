@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time_off_requests</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
         table, th{
 	        border: 0px solid black;
@@ -96,7 +98,6 @@
     </div>
     </div>
     
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
@@ -216,86 +217,58 @@
           });
 
         tg.MainButton.text = "Отправить"; //изменяем текст кнопки 
-	tg.MainButton.textColor = "#F55353"; //изменяем цвет текста кнопки
-	tg.MainButton.color = "#143F6B"; //изменяем цвет бэкграунда кнопки
-	tg.MainButton.setParams({"color": "#143F6B"}); //так изменяются все параметры     
-        tg.MainButton.enable()
-        tg.MainButton.show()
+//        tg.MainButton.enable()
+//        tg.MainButton.show()
         let send = document.getElementById("send");
         
-        send.addEventListener("click", () => {
-            document.getElementById("error").innerText = "";
-            let bdate = document.getElementById("bdate").value;
-            let edate = document.getElementById("edate").value;
-            let btime = document.getElementById("begintime").value;
-            let etime = document.getElementById("endtime").value;
-            let trequest = document.getElementById("trequest").value;
-            let memo = document.getElementById("memo").value;
-    
+        send.addEventListener("click", function(){
 
-            if (bdate.length < 8)
-            {
-                document.getElementById("error").innerText = "Дата не должна быть пустой";
-                return;
-            }
-
-            if (btime.length > 4)
-            {
-                if (memo.length < 5)
-                {
-                    document.getElementById("error").innerText = "Коментарий не должен быть пустым";
-                    return;
-                }
-            }
-
-            let data = {
-                bdate: bdate,
-                edate: edate,
-                btime: btime,
-                etime: etime,
-                trequest: trequest,
-                memo: memo
-            }
-            tg.sendData(JSON.stringify(data));
-//            tg.close(); 
+            if (tg.MainButton.isVisible){ //если кнопка показана 
+                tg.MainButton.hide() //скрываем кнопку 
+             }
+             else{ //иначе
+                tg.MainButton.show() //показываем 
+             }
+            });
        });
-       
-       Telegram.WebApp.onEvent('mainButtonClicked', function(){
-            document.getElementById("error").innerText = "";
-            let bdate = document.getElementById("bdate").value;
-            let edate = document.getElementById("edate").value;
-            let btime = document.getElementById("begintime").value;
-            let etime = document.getElementById("endtime").value;
-            let trequest = document.getElementById("trequest").value;
-            let memo = document.getElementById("memo").value;
-    
 
-            if (bdate.length < 8)
+       Telegram.WebApp.onEvent('mainButtonClicked', function(){
+        document.getElementById("error").innerText = "";
+        let bdate = document.getElementById("bdate").value;
+        let edate = document.getElementById("edate").value;
+        let btime = document.getElementById("begintime").value;
+        let etime = document.getElementById("endtime").value;
+        let trequest = document.getElementById("trequest").value;
+        let memo = document.getElementById("memo").value;
+
+
+        if (bdate.length < 8)
+        {
+            document.getElementById("error").innerText = "Дата не должна быть пустой";
+            return;
+        }
+
+        if (btime.length > 4)
+        {
+            if (memo.length < 5)
             {
-                document.getElementById("error").innerText = "Дата не должна быть пустой";
+                document.getElementById("error").innerText = "Коментарий не должен быть пустым";
                 return;
             }
+        }
 
-            if (btime.length > 4)
-            {
-                if (memo.length < 5)
-                {
-                    document.getElementById("error").innerText = "Коментарий не должен быть пустым";
-                    return;
-                }
-            }
-
-            let data = {
-                bdate: bdate,
-                edate: edate,
-                btime: btime,
-                etime: etime,
-                trequest: trequest,
-                memo: memo
-            }
-            tg.sendData(JSON.stringify(data));
-            tg.close(); 
-        //при клике на основную кнопку отправляем данные в строковом виде
+        let data = {
+            bdate: bdate,
+            edate: edate,
+            btime: btime,
+            etime: etime,
+            trequest: trequest,
+            memo: memo
+        }
+//        input_edate.value = edate_t;
+        tg.sendData(JSON.stringify(data));
+        tg.close(); 
+          //при клике на основную кнопку отправляем данные в строковом виде
        });
     </script>
 </body>
