@@ -311,10 +311,12 @@
 //            tg.MainButton.show() //показываем 
             if (document.getElementById("error").innerText == "" &&  last_error == "")
             {
-//                alert("Sent Data")
+                
     	        tg.sendData(JSON.stringify(data));
-            }
-//            ekse   alert("No sent Data")
+            }ekse
+	    {
+		alert("Ошибка. Запрос не отправлен");
+	    }
 
             tg.close(); 
 
