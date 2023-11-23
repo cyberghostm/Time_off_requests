@@ -20,12 +20,23 @@
             color: var(--tg-theme-text-color);
             background: #74f2f9;
         }
+
         #main {
             width: 100%;
             padding: 10px;
             text-align: center;
-       } 
-       #error{
+        } 
+        #H1 {
+            color:blueviolet;
+            text-align: center;
+        }     
+
+        #timedisplay {
+            color:red;
+            text-align: left;
+        }     
+
+        #error{
             width: 100%;
             padding: 10px;
             color:red;
@@ -51,7 +62,9 @@
     </style>	
 </head>
 <body>
-    <h1>Time-Off Pro</h1> 
+    <div id = "H1">
+        <h1>Time-Off Pro</h1> 
+    </div>
     <div id = "main">
         <table>
             <tr>
@@ -137,6 +150,7 @@
         input_btime.min = "09:00";
         input_btime.max = "18:00";
 
+
         const input_etime = document.getElementById("endtime");
         input_etime.type = "time";
         input_etime.min = "09:00";
@@ -144,7 +158,20 @@
 
         if (input_bdate.value == bdate.toISOString().split("T")[0])
         {
+
             var n_time = bdate.toLocaleTimeString();
+
+            var time2 = "09:00";
+
+            var time1Date= new Date(bdate.toISOString().split("T")[0] + " " + n_time);
+            var time2Date= new Date(bdate.toISOString().split("T")[0] + " " + time2);
+            
+
+            if(time1Date < time2Date ){
+                n_time = "09:00";
+//                alert(time2Date);
+            }
+    
             n_time = n_time.split(":")[0]+":"+n_time.split(":")[1];
             input_btime.value = n_time;
             input_btime.min = n_time;
@@ -194,6 +221,15 @@
 
 
         input_btime.addEventListener("change", (event) => {
+            
+            var time2 = "09:00";
+            var time1Date= new Date(bdate.toISOString().split("T")[0] + " " + n_time);
+            var time2Date= new Date(bdate.toISOString().split("T")[0] + " " + time2);
+
+            if(time1Date < time2Date ){
+                n_time = "09:00";
+            }
+
             if (input_btime.validity.valid && input_btime.type === "time") 
             {
                 document.getElementById("error").innerText = "";
@@ -286,4 +322,3 @@
     </script>
 </body>
 </html>
-
