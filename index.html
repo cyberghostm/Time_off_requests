@@ -111,6 +111,7 @@
     </div>
     
     <script>
+        let last_error = ""
         let tg = window.Telegram.WebApp;
         tg.expand();
  
@@ -158,7 +159,7 @@
 
         if (input_bdate.value == bdate.toISOString().split("T")[0])
         {
-
+            last_error = "";
             var n_time = bdate.toLocaleTimeString();
 
             var time2 = "09:00";
@@ -230,11 +231,14 @@
                 n_time = "09:00";
             }
 
+
             if (input_btime.validity.valid && input_btime.type === "time") 
             {
+                last_error = "";
                 document.getElementById("error").innerText = "";
             } else 
-            {
+            {   
+                last_error = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
                 document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
                 return;
             }
@@ -243,14 +247,20 @@
           input_etime.addEventListener("change", (event) => {
             if (input_etime.validity.valid && input_etime.type === "time") 
             {
+                last_error = "";
                 document.getElementById("error").innerText = "";
             } else 
             {
+                last_error = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
                 document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
                 return;
             }
           });
 
+        const input_coment = document.getElementById("memo");
+        input_coment.type = "textarea";
+          
+        
         tg.MainButton.text = "Отправить"; //изменяем текст кнопки 
 
         let send = document.getElementById("send");
@@ -264,7 +274,9 @@
             let etime = document.getElementById("endtime").value;
             let trequest = document.getElementById("trequest").value;
             let memo = document.getElementById("memo").value;
-                document.getElementById("error").innerText = "";
+
+//            alert(last_error);
+    
             if (bdate.length < 8)
             {
                 document.getElementById("error").innerText = "Дата не должна быть пустой";
@@ -281,6 +293,12 @@
                     return;
                 }
             }
+
+//            document.getElementById("error").innerText = "";
+            document.getElementById("error").innerText = last_error;
+            input_bdate.value = "";
+            input_coment.value = "";
+
 
             let data = {
                 bdate: bdate,
