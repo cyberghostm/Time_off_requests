@@ -308,66 +308,20 @@
                 trequest: trequest,
                 memo: memo
             }
-//            tg.MainButton.show() //показываем 
             if (document.getElementById("error").innerText == "" &&  last_error == "")
             {
-                
-    	        tg.sendData(JSON.stringify(data));
-            }ekse
-	    {
-		alert("Ошибка. Запрос не отправлен");
-	    }
+                alert("Запрос отправлен");
+       	        tg.sendData(JSON.stringify(data));
+            }else
+	        {
+		        alert("Ошибка. Запрос не отправлен");
+	        }
 
             tg.close(); 
 
 	});
 
-       Telegram.WebApp.onEvent('mainButtonClicked', function()
-       {
-//        document.getElementById("error").innerText = "";
-        let bdate = document.getElementById("bdate").value;
-        let edate = document.getElementById("edate").value;
-        let btime = document.getElementById("begintime").value;
-        let etime = document.getElementById("endtime").value;
-        let trequest = document.getElementById("trequest").value;
-        let memo = document.getElementById("memo").value;
 
-        if (bdate.length < 8)
-        {
-            document.getElementById("error").innerText = "Дата не должна быть пустой";
-            tg.MainButton.hide() //скрываем кнопку 
-            return;
-        }
-
-        if (btime.length > 4)
-        {
-            if (memo.length < 5)
-            {
-                document.getElementById("error").innerText = "Коментарий не должен быть пустым";
-                tg.MainButton.hide() //скрываем кнопку 
-                return;
-            }
-        }
-
-//            document.getElementById("error").innerText = "";
-        document.getElementById("error").innerText = last_error;
-        input_bdate.value = "";
-        input_coment.value = "";
-
-
-        let data = {
-            bdate: bdate,
-            edate: edate,
-            btime: btime,
-            etime: etime,
-            trequest: trequest,
-            memo: memo
-        }
-
-//        tg.sendData(JSON.stringify(data));
-         tg.sendData("Строка данных");
-         tg.close(); 
-       });
     </script>
 </body>
 </html>
