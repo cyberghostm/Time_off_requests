@@ -308,7 +308,8 @@
                 trequest: trequest,
                 memo: memo
             }
-            if (document.getElementById("error").innerText == "" &&  last_error == "")
+//            if (document.getElementById("error").innerText == "" &&  last_error == "")
+            if (input_btime.validity.valid  && input_etime.validity.valid) 
             {
                 alert("Запрос отправлен");
        	        tg.sendData(JSON.stringify(data));
