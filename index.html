@@ -111,7 +111,11 @@
     </div>
     
     <script>
-        let last_error = ""
+        let last_error_bd = ""
+        let last_error_ed = ""
+        let last_error_bt = ""
+        let last_error_et = ""
+        let last_error_m = ""
         let tg = window.Telegram.WebApp;
         tg.expand();
  
@@ -234,11 +238,11 @@
 
             if (input_btime.validity.valid && input_btime.type === "time") 
             {
-                last_error = "";
+                last_error_bt = "";
                 document.getElementById("error").innerText = "";
             } else 
             {   
-                last_error = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
+                last_error_bt = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
                 document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с " +input_btime.min +" до "+input_btime.max;
                 return;
             }
@@ -247,11 +251,11 @@
           input_etime.addEventListener("change", (event) => {
             if (input_etime.validity.valid && input_etime.type === "time") 
             {
-                last_error = "";
+                last_error_et = "";
                 document.getElementById("error").innerText = "";
             } else 
             {
-                last_error = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
+                last_error_et = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
                 document.getElementById("error").innerText = "Время должно быть указанно в диапазоне с 09:00 до 18:00";
                 return;
             }
@@ -279,23 +283,24 @@
     
             if (bdate.length < 8)
             {
+                last_error_bd = "Дата не должна быть пустой";
                 document.getElementById("error").innerText = "Дата не должна быть пустой";
                 tg.MainButton.hide() //скрываем кнопку 
                 return;
-            }
+            }else 
+                last_error_bd = "";
     
-            if (btime.length > 4)
+            if (memo.length < 5)
             {
-                if (memo.length < 5)
-                {
-                    document.getElementById("error").innerText = "Коментарий не должен быть пустым";
-                    tg.MainButton.hide() //скрываем кнопку 
-                    return;
-                }
-            }
+                last_error_m = "Коментарий не должен быть пустым";
+                document.getElementById("error").innerText = "Коментарий не должен быть пустым";
+                return;
+            }else
+                last_error_m = "";
 
 //            document.getElementById("error").innerText = "";
-            document.getElementById("error").innerText = last_error;
+            
+            document.getElementById("error").innerText = last_error_bd + " " + last_error_bt + " " + last_error_et + " " + last_error_m;
             input_bdate.value = "";
             input_coment.value = "";
 
@@ -308,15 +313,21 @@
                 trequest: trequest,
                 memo: memo
             }
-//            if (document.getElementById("error").innerText == "" &&  last_error == "")
-            if (input_btime.validity.valid  && input_etime.validity.valid) 
+            if (btime.length > 4)
+            {
+                if (input_btime.validity.valid  && input_etime.validity.valid) 
+                {
+                    alert("Запрос отправлен");
+       	            tg.sendData(JSON.stringify(data));
+                }else
+	            {
+		            alert("Ошибка. Запрос не отправлен");
+	            }
+            }else
             {
                 alert("Запрос отправлен");
-       	        tg.sendData(JSON.stringify(data));
-            }else
-	        {
-		        alert("Ошибка. Запрос не отправлен");
-	        }
+                tg.sendData(JSON.stringify(data));
+            }
 
             tg.close(); 
 
